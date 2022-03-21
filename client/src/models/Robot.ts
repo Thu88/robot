@@ -1,7 +1,7 @@
 import { INSTRUCTION } from "./Room";
 import Square from "./Square";
 
-enum DIRECTION {
+export enum DIRECTION {
     North,
     East,
     South,
