@@ -111,5 +111,13 @@ export default class Room{
         return true;
     }
 
+    public get squares(): Square[][] {
+        return this._squares;
+    }
+
+    public get robot(): Robot {
+        return this._robot;
+    }
+
 
 }
