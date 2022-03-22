@@ -28,5 +28,9 @@ export default class Square {
     public get active(): boolean {
         return this._active;
     }
+
+    public set active(bool: boolean) {
+        this._active = bool;
+    }
 }
 
