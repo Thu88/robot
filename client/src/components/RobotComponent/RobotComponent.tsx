@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Robot, { DIRECTION } from "../../models/Robot";
-import "./Robot.css"
 
 interface Props {
     robot: Robot
