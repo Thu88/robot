@@ -10,6 +10,7 @@ interface Props {
 const SquareComponent = ({ robot, square }: Props) => {
     return (
         <div>
+            <h1>{`${square.x} ${square.y}`}</h1>
             {square.active && (
                 <RobotComponent robot={robot} />
 
