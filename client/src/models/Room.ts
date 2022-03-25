@@ -52,6 +52,7 @@ export default class Room{
         try {
             this._robot.position = this._squares[x][y];
             this._robot.direction = direction;
+            this._robot.position.active = true;
         }
         catch (err) {
             return false;
@@ -83,21 +84,29 @@ export default class Room{
             //If the instruction is Forward, move the robot to the correct square.
             if (instruction === INSTRUCTION.Forward) {
                 try {
+                    //Save a local copy of the robot's x and y coordinates.
+                    const robotPosX = this._robot.position.x;
+                    const robotPosY = this._robot.position.y;
+
+                    //Inform the square the robot is located on, that the robot is moving to a new sqaure.
+                    this.robot.position.active = false;
+
+                    //Move the robot the correct square based on its direction.
                     switch (this._robot.direction) {
                         case DIRECTION.North:
-                            this._robot.position.x += 1;
+                            this._robot.position = this._squares[robotPosX + 1][robotPosY];
                             break;
                             
                         case DIRECTION.South:
-                            this._robot.position.x -= 1;
+                            this._robot.position = this._squares[robotPosX - 1][robotPosY];
                             break;
                         
                         case DIRECTION.East:
-                            this._robot.position.y += 1;
+                            this._robot.position = this._squares[robotPosX][robotPosY + 1];
                             break;
                         
                         case DIRECTION.West:
-                            this._robot.position.y -= 1;
+                            this._robot.position = this._squares[robotPosX][robotPosY - 1];
                             break;
                     }
                 }
@@ -107,6 +116,9 @@ export default class Room{
                 }
             }
         }
+
+        //Inform the square the robot is moving to that the robot has moved to it.
+        this._robot.position.active = true;
 
         return true;
     }
