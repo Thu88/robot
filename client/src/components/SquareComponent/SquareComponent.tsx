@@ -11,9 +11,10 @@ interface Props {
 
 const useStyles = makeStyles(() => ({
     square: {
-        width: '40px',
-        height: '40px',
+        width: '50px',
+        height: '50px',
         margin: '3px',
+        padding: '5px'
     }
 }))
 
@@ -23,8 +24,9 @@ const SquareComponent = ({ robot, square }: Props) => {
         <Box>
             <Paper className={classes.square}>
                 {square.active && (
-                    <RobotComponent robot={robot} />
-
+                    <Box>
+                        <RobotComponent robot={robot} />
+                    </Box>
                 )}
             </Paper>
         </Box>
