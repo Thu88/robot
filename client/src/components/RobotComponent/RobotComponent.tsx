@@ -7,6 +7,11 @@ interface Props {
 
 const RobotComponent = ({ robot }: Props): JSX.Element => {
     const [imgDirection, setImgDirection] = useState<JSX.Element>(<img />);
+    const [direction, setDirection] = useState<DIRECTION>(robot.direction);
+
+    if (robot.direction !== direction) {
+        setDirection(robot.direction);
+    }
 
     useEffect(() => {
         switch (robot.direction) {
@@ -26,7 +31,7 @@ const RobotComponent = ({ robot }: Props): JSX.Element => {
                 setImgDirection(<img width="50px" height="50px" src="/img/robotwest.svg" />)
                 break;
         }
-    }, []);
+    }, [direction]);
 
     return (
         <div>
