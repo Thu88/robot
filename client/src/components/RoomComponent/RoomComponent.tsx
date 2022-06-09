@@ -3,8 +3,7 @@ import Room from "../../models/Room"
 import SquareComponent from "../SquareComponent"
 import { ClassNameMap, makeStyles } from "@mui/styles";
 import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField } from "@mui/material"
-import { DIRECTION } from "../../models/Robot";
-import { padding } from "@mui/system";
+import Robot, { DIRECTION } from "../../models/Robot";
 import React from "react";
 
 const useStyles = makeStyles(() => ({
@@ -45,9 +44,10 @@ const useStyles = makeStyles(() => ({
 const RoomComponent = () => {
     const classes: ClassNameMap = useStyles();
     const [room, setRoom] = useState<Room>(new Room(10))
+    const [robot, setRobot] = useState<Robot>();
     const [startX, setStartX] = useState<number>(0);
     const [startY, setStartY] = useState<number>(0);
-    const [startDirection, setStartDirection] = useState<number | String>(0);
+    const [startDirection, setStartDirection] = useState<DIRECTION>(DIRECTION.East);
 
     const handleChange = ((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setState: Function) => {
        setState(e.target.value);
@@ -61,7 +61,12 @@ const RoomComponent = () => {
         });
         return true;
     }
-    room.setRobotPositionAndDirection(0, 0, DIRECTION.East);
+    const setStartPosition = () => {
+        const roomCopy: Room = new Room(10);
+        roomCopy.setRobotPositionAndDirection(startX, startY, startDirection); 
+        setRoom(roomCopy);
+        setRobot(room.robot);
+    }
     useEffect(() => {
        
     }, [])
@@ -92,7 +97,7 @@ const RoomComponent = () => {
                                 type="number"
                                 value={startDirection}
                                 onChange={(e) => {
-                                    setStartDirection(e.target.value);
+                                    setStartDirection(e.target.value as DIRECTION);
                                 }}
                             >
                                 <MenuItem value={DIRECTION.North}>North</MenuItem>
@@ -104,7 +109,7 @@ const RoomComponent = () => {
                     </Box>
                     <Box className={classes.inputs}>
                         <FormControl fullWidth>
-                            <Button className={classes.input} variant="contained">Enter</Button>
+                            <Button className={classes.input} onClick={setStartPosition} variant="contained">Enter</Button>
                         </FormControl>
                     </Box>
                 </Box>

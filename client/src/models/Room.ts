@@ -131,5 +131,9 @@ export default class Room{
         return this._robot;
     }
 
+    public set robot(robot: Robot) {
+        this._robot = robot;
+    }
+
 
 }
