@@ -67,22 +67,33 @@ export default class Room{
     public moveRobot(instructions: string): boolean {
         //Get an array where each element is a single instruction.
         const disassembledInstructions: string[] = instructions.split('');
+        console.log(disassembledInstructions)
 
         //Loop through each instruction.
         for (let instruction of disassembledInstructions) {
+            let convertedInstruction: string = instruction;
             
+            if (instruction === "F")
+                convertedInstruction = "Forward"  
+            else if (instruction === "L")
+                convertedInstruction = "Left"
+            else if (instruction === "R")
+                convertedInstruction = "Right"
+
+
             //If the instruction contain an error (it isn't included in the INSTRUCTIONS enum) return false.
-            if (!(instruction in INSTRUCTION)) {
+            if (!(convertedInstruction in INSTRUCTION)) {
+                console.log("Error: Only use (F, L, R) in commands.")
                 return false;
             }
 
             //If the instruction if Right or Left, change the robots direction.
-            if (instruction != INSTRUCTION.Forward) {
-                this._robot.changeDirection(INSTRUCTION[instruction as keyof typeof INSTRUCTION]);
+            if (convertedInstruction !== INSTRUCTION.Forward) {
+                this._robot.changeDirection(INSTRUCTION[convertedInstruction as keyof typeof INSTRUCTION]);
             }
 
             //If the instruction is Forward, move the robot to the correct square.
-            if (instruction === INSTRUCTION.Forward) {
+            if (convertedInstruction === INSTRUCTION.Forward) {
                 try {
                     //Save a local copy of the robot's x and y coordinates.
                     const robotPosX = this._robot.position.x;
@@ -112,6 +123,7 @@ export default class Room{
                 }
                 //If the instructions move the x or y coordinates below 0 or above length, return false.
                 catch (err) {
+                    console.log("Error: Commands move robot out of room.")
                     return false;
                 }
             }

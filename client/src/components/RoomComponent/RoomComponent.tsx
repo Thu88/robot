@@ -48,6 +48,7 @@ const RoomComponent = () => {
     const [startX, setStartX] = useState<number>(0);
     const [startY, setStartY] = useState<number>(0);
     const [startDirection, setStartDirection] = useState<DIRECTION>(DIRECTION.East);
+    const [commands, setCommands] = useState<string>("");
 
     const handleChange = ((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setState: Function) => {
        setState(e.target.value);
@@ -63,9 +64,17 @@ const RoomComponent = () => {
     }
     const setStartPosition = () => {
         const roomCopy: Room = new Room(10);
+        
         roomCopy.setRobotPositionAndDirection(startX, startY, startDirection); 
         setRoom(roomCopy);
         setRobot(room.robot);
+    }
+    const moveRobot = () => {
+        const roomCopy: Room = new Room(10); 
+        roomCopy.setRobotPositionAndDirection(startX, startY, startDirection);
+        
+        roomCopy.moveRobot(commands);
+        setRoom(roomCopy);
     }
     useEffect(() => {
        
@@ -110,6 +119,19 @@ const RoomComponent = () => {
                     <Box className={classes.inputs}>
                         <FormControl fullWidth>
                             <Button className={classes.input} onClick={setStartPosition} variant="contained">Enter</Button>
+                        </FormControl>
+                    </Box>
+               
+                    <Box className={classes.inputs}>
+                        <FormControl fullWidth>
+                            <TextField type="text" value={commands} onChange={(e) => {handleChange(e, setCommands)}} className={classes.input} label="Enter commands" />
+                        </FormControl>
+                    </Box>
+
+                    
+                    <Box className={classes.inputs}>
+                        <FormControl fullWidth>
+                            <Button className={classes.input} onClick={moveRobot} variant="contained">Enter</Button>
                         </FormControl>
                     </Box>
                 </Box>
