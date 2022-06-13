@@ -13,7 +13,7 @@ export default class Robot{
     private _directrion: DIRECTION;
 
     constructor(square: Square) {
-        this._position = square;
+        this._position = new Square(-1 ,-1)
         this._directrion = DIRECTION.North;
     }
 

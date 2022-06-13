@@ -64,18 +64,16 @@ const RoomComponent = () => {
         return true;
     }
     const setStartPosition = () => {
-        const roomCopy: Room = new Room(10);
+        const valid = room.setRobotPositionAndDirection(startX, startY, startDirection);
+
+        valid ? setUpdate(!update) : window.alert("Unvalid commands.")
         
-        roomCopy.setRobotPositionAndDirection(startX, startY, startDirection); 
-        setRoom(roomCopy);
-        setRobot(room.robot);
     }
     const moveRobot = () => {
-        const roomCopy: Room = new Room(10); 
-        roomCopy.setRobotPositionAndDirection(startX, startY, startDirection);
+        const valid = room.moveRobot(commands);
         
-        roomCopy.moveRobot(commands);
-        setRoom(roomCopy);
+        valid ? setUpdate(!update) : window.alert("Unvalid commands.")
+
     }
     useEffect(() => {
        
@@ -119,7 +117,7 @@ const RoomComponent = () => {
                     </Box>
                     <Box className={classes.inputs}>
                         <FormControl fullWidth>
-                            <Button className={classes.input} onClick={ () => { room.setRobotPositionAndDirection(startX, startY, startDirection); setUpdate(!update);}} variant="contained">Enter</Button>
+                            <Button className={classes.input} onClick={setStartPosition} variant="contained">Enter</Button>
                         </FormControl>
                     </Box>
                
@@ -132,7 +130,7 @@ const RoomComponent = () => {
                     
                     <Box className={classes.inputs}>
                         <FormControl fullWidth>
-                            <Button className={classes.input} onClick={() => {room.moveRobot(commands); setUpdate(!update);}} variant="contained">Enter</Button>
+                            <Button className={classes.input} onClick={moveRobot} variant="contained">Enter</Button>
                         </FormControl>
                     </Box>
                 </Box>

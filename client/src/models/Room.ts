@@ -49,6 +49,12 @@ export default class Room{
         provided direction contains an error.
     */
     public setRobotPositionAndDirection(x: number, y: number, direction: DIRECTION): boolean {
+        const oldPosition: Square = this._robot.position; 
+        if ((x < 0 || x >= this._length) || ((y < 0 || y >= this._length))) {
+            console.log("error")
+            return false;
+        }
+
         try {
             this._robot.position = this._squares[x][y];
             this._robot.direction = direction;
@@ -58,6 +64,9 @@ export default class Room{
             return false;
         }
 
+        if (!(oldPosition.x === x && oldPosition.y === y)) {
+            oldPosition.active = false;
+        }
         return true;
     }
 
