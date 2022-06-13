@@ -49,6 +49,7 @@ const RoomComponent = () => {
     const [startY, setStartY] = useState<number>(0);
     const [startDirection, setStartDirection] = useState<DIRECTION>(DIRECTION.East);
     const [commands, setCommands] = useState<string>("");
+    const [update, setUpdate] = useState<boolean>(false);
 
     const handleChange = ((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setState: Function) => {
        setState(e.target.value);
@@ -118,7 +119,7 @@ const RoomComponent = () => {
                     </Box>
                     <Box className={classes.inputs}>
                         <FormControl fullWidth>
-                            <Button className={classes.input} onClick={setStartPosition} variant="contained">Enter</Button>
+                            <Button className={classes.input} onClick={ () => { room.setRobotPositionAndDirection(startX, startY, startDirection); setUpdate(!update);}} variant="contained">Enter</Button>
                         </FormControl>
                     </Box>
                
@@ -131,7 +132,7 @@ const RoomComponent = () => {
                     
                     <Box className={classes.inputs}>
                         <FormControl fullWidth>
-                            <Button className={classes.input} onClick={moveRobot} variant="contained">Enter</Button>
+                            <Button className={classes.input} onClick={() => {room.moveRobot(commands); setUpdate(!update);}} variant="contained">Enter</Button>
                         </FormControl>
                     </Box>
                 </Box>

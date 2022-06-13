@@ -3,6 +3,7 @@ import Square from "../../models/Square";
 import RobotComponent from "../RobotComponent";
 import { ClassNameMap, makeStyles } from "@mui/styles";
 import { Box, Paper } from "@mui/material"
+import { useState } from "react";
 
 interface Props {
     robot: Robot,
@@ -20,6 +21,12 @@ const useStyles = makeStyles(() => ({
 
 const SquareComponent = ({ robot, square }: Props) => {
     const classes: ClassNameMap = useStyles();
+    const [active, setActive] = useState<boolean>(square.active)
+    
+    if (square.active !== active) {
+        setActive(square.active);
+    }
+
     return (
         <Box>
             <Paper className={classes.square}>
